@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+</head>
+<body>
+<script src="./evt.js"></script>
+<button onclick="createKeyPair()">Generate Keys And Send To Android</button>
+<script>
+        // Tip:
+        // please put some logic here to reduce the times of calling between JS and Java
+        // because it is slow
+        // For example, you could create a function "createKeyPair". In this function you
+        // may call `randomPrivateKey` and `privateToPublic` together so only one call
+        // is needed from android side.
+        window.createKeyPair = async function createKeyPair() {
+            var privateKey = await EVT.EvtKey.randomPrivateKey();
+            var publicKey = EVT.EvtKey.privateToPublic(privateKey);
+            window.android.get(JSON.stringify({ privateKey, publicKey }));
+        }
+
+        // For more example of evtjs, please refer to our documentation
+    </script>
+</body>
+</html>
